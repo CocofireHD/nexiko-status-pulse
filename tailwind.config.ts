@@ -26,7 +26,8 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					glow: 'hsl(var(--primary-glow))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -52,6 +53,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				status: {
+					online: 'hsl(var(--status-online))',
+					degraded: 'hsl(var(--status-degraded))',
+					partial: 'hsl(var(--status-partial))',
+					major: 'hsl(var(--status-major))', 
+					maintenance: 'hsl(var(--status-maintenance))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -62,6 +70,15 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-status': 'var(--gradient-status)'
+			},
+			boxShadow: {
+				'nexiko': 'var(--shadow-nexiko)',
+				'status': 'var(--shadow-status)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
