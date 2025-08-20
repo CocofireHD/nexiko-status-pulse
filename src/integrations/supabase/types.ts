@@ -14,7 +14,113 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      incidents: {
+        Row: {
+          affected_services: string[]
+          created_at: string
+          description: string
+          id: string
+          resolved_at: string | null
+          severity: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          affected_services?: string[]
+          created_at?: string
+          description: string
+          id?: string
+          resolved_at?: string | null
+          severity?: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          affected_services?: string[]
+          created_at?: string
+          description?: string
+          id?: string
+          resolved_at?: string | null
+          severity?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          check_type: string
+          created_at: string
+          description: string | null
+          host: string
+          id: string
+          last_checked: string | null
+          name: string
+          port: number | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          check_type?: string
+          created_at?: string
+          description?: string | null
+          host: string
+          id?: string
+          last_checked?: string | null
+          name: string
+          port?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          check_type?: string
+          created_at?: string
+          description?: string | null
+          host?: string
+          id?: string
+          last_checked?: string | null
+          name?: string
+          port?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      uptime_logs: {
+        Row: {
+          id: string
+          response_time: number | null
+          service_id: string
+          status: string
+          timestamp: string
+        }
+        Insert: {
+          id?: string
+          response_time?: number | null
+          service_id: string
+          status: string
+          timestamp?: string
+        }
+        Update: {
+          id?: string
+          response_time?: number | null
+          service_id?: string
+          status?: string
+          timestamp?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "uptime_logs_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
