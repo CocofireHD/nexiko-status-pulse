@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { StatusData, Service, Incident, UptimeLog } from '@/types/status';
+import { StatusData, Service, Incident, UptimeLog, ServiceStatus } from '@/types/status';
 
 export function useStatusData() {
   const [data, setData] = useState<StatusData | null>(null);
@@ -18,7 +18,18 @@ export function useStatusData() {
         throw new Error('Failed to fetch status data');
       }
       const statusData = await statusResponse.json();
-      const services = statusData.services || [];
+      
+      // Transform the API response object into Service array
+      const services = Object.entries(statusData).map(([name, status]) => ({
+        id: name.toLowerCase().replace(/\s+/g, '-'),
+        name,
+        host: '', // Not provided by API
+        check_type: 'http' as const,
+        status: status as ServiceStatus,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        last_checked: new Date().toISOString()
+      }));
 
       // Fetch active incidents
       const { data: incidents, error: incidentsError } = await supabase
