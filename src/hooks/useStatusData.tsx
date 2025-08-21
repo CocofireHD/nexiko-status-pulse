@@ -12,13 +12,13 @@ export function useStatusData() {
       setLoading(true);
       setError(null);
 
-      // Fetch services
-      const { data: services, error: servicesError } = await supabase
-        .from('services')
-        .select('*')
-        .order('name');
-
-      if (servicesError) throw servicesError;
+      // Fetch services from external API
+      const statusResponse = await fetch('http://45.147.7.231:3000/status');
+      if (!statusResponse.ok) {
+        throw new Error('Failed to fetch status data');
+      }
+      const statusData = await statusResponse.json();
+      const services = statusData.services || [];
 
       // Fetch active incidents
       const { data: incidents, error: incidentsError } = await supabase
