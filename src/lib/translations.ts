@@ -17,6 +17,7 @@ export const translations = {
     
     // Status
     'status.online': 'Online',
+    'status.offline': 'Offline',
     'status.degraded': 'Degraded Performance',
     'status.partial_outage': 'Partial Outage',
     'status.major_outage': 'Major Outage',
@@ -63,6 +64,7 @@ export const translations = {
     
     // Status
     'status.online': 'Online',
+    'status.offline': 'Offline',
     'status.degraded': 'Beeinträchtigte Leistung',
     'status.partial_outage': 'Teilausfall',
     'status.major_outage': 'Größerer Ausfall',

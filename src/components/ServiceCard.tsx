@@ -17,6 +17,8 @@ export function ServiceCard({ service, uptimeLogs }: ServiceCardProps) {
     switch (service.status) {
       case 'online':
         return 'default';
+      case 'offline':
+        return 'destructive';
       case 'degraded':
         return 'secondary';
       case 'partial_outage':
@@ -34,6 +36,8 @@ export function ServiceCard({ service, uptimeLogs }: ServiceCardProps) {
     switch (service.status) {
       case 'online':
         return 'bg-status-online';
+      case 'offline':
+        return 'bg-status-major';
       case 'degraded':
         return 'bg-status-degraded';
       case 'partial_outage':

@@ -1,4 +1,4 @@
-export type ServiceStatus = 'online' | 'degraded' | 'partial_outage' | 'major_outage' | 'maintenance' | 'unknown';
+export type ServiceStatus = 'online' | 'offline' | 'degraded' | 'partial_outage' | 'major_outage' | 'maintenance' | 'unknown';
 
 export type IncidentStatus = 'active' | 'resolved';
 
