@@ -16,7 +16,7 @@ export function useStatusData() {
 
       try {
         // Try to fetch from external API with CORS proxy
-        const statusResponse = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('http://45.147.7.231:3000/status'));
+        const statusResponse = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('http://45.147.7.231:3000/status') + '&nocache=1', { cache: 'no-store' });
         if (statusResponse.ok) {
           const proxyData = await statusResponse.json();
           const statusData = JSON.parse(proxyData.contents);

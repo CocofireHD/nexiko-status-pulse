@@ -41,6 +41,7 @@ export const translations = {
     'common.days': 'days',
     'common.ago': 'ago',
     'common.ms': 'ms',
+    'common.justNow': 'Just now',
     
     // Footer
     'footer.poweredBy': 'Powered by Nexiko Network',
@@ -88,6 +89,7 @@ export const translations = {
     'common.days': 'Tage',
     'common.ago': 'vor',
     'common.ms': 'ms',
+    'common.justNow': 'Gerade eben',
     
     // Footer
     'footer.poweredBy': 'Bereitgestellt von Nexiko Network',

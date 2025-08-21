@@ -14,7 +14,7 @@ export function StatusFooter({ lastUpdated }: StatusFooterProps) {
     const now = new Date();
     const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
     
-    if (diffInSeconds < 60) return 'Just now';
+    if (diffInSeconds < 60) return t('common.justNow');
     
     const diffInMinutes = Math.floor(diffInSeconds / 60);
     if (diffInMinutes < 60) return `${diffInMinutes}m ${t('common.ago')}`;
@@ -23,7 +23,7 @@ export function StatusFooter({ lastUpdated }: StatusFooterProps) {
     if (diffInHours < 24) return `${diffInHours}h ${t('common.ago')}`;
     
     const diffInDays = Math.floor(diffInHours / 24);
-    return `${diffInDays}${t('common.days')} ${t('common.ago')}`;
+    return `${diffInDays} ${t('common.days')} ${t('common.ago')}`;
   };
 
   return (
