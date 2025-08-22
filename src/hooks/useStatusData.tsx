@@ -15,26 +15,24 @@ export function useStatusData() {
       let services: Service[] = [];
 
       try {
-        // Try to fetch from external API with CORS proxy and cache-busting timestamp
-        const timestamp = Date.now();
-        const statusResponse = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(`http://45.147.7.231:3000/status?t=${timestamp}`) + '&nocache=1', { cache: 'no-store' });
-        if (statusResponse.ok) {
-          const proxyData = await statusResponse.json();
-          const statusData = JSON.parse(proxyData.contents);
-          
-          // Transform the API response object into Service array
-          services = Object.entries(statusData).map(([name, status]) => ({
-            id: name.toLowerCase().replace(/\s+/g, '-'),
-            name,
-            host: '', // Not provided by API
-            check_type: 'http' as const,
-            status: status as ServiceStatus,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-            last_checked: new Date().toISOString()
+        // Fetch from secure Edge Function instead of insecure proxy
+        const { data: statusResult, error: functionError } = await supabase.functions.invoke('fetch-status');
+        
+        if (functionError) {
+          throw new Error(`Edge function error: ${functionError.message}`);
+        } else if (statusResult?.success && statusResult?.services) {
+          services = statusResult.services.map((service: any) => ({
+            id: service.id,
+            name: service.name,
+            host: service.host || '',
+            check_type: service.check_type,
+            status: service.status as ServiceStatus,
+            created_at: service.created_at,
+            updated_at: service.updated_at,
+            last_checked: service.last_checked
           }));
         } else {
-          throw new Error('Proxy failed');
+          throw new Error('Invalid response from status function');
         }
       } catch (apiError) {
         console.warn('External API failed, using fallback data:', apiError);

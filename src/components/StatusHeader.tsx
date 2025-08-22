@@ -87,6 +87,13 @@ export function StatusHeader({ overallStatus }: StatusHeaderProps) {
                 <Sun className="w-4 h-4" />
               )}
             </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => window.location.href = '/auth'}
+            >
+              Admin
+            </Button>
           </div>
         </div>
 
