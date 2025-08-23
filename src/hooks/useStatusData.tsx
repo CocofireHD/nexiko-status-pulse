@@ -117,8 +117,8 @@ export function useStatusData() {
       )
       .subscribe();
 
-    // Refresh data every 30 seconds
-    const interval = setInterval(fetchData, 30000);
+    // Refresh data every 60 seconds to reduce load
+    const interval = setInterval(fetchData, 60000);
 
     return () => {
       supabase.removeChannel(servicesSubscription);
