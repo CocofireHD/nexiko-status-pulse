@@ -122,6 +122,13 @@ export type Database = {
             foreignKeyName: "uptime_logs_service_id_fkey"
             columns: ["service_id"]
             isOneToOne: false
+            referencedRelation: "service_status"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "uptime_logs_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
             referencedRelation: "services"
             referencedColumns: ["id"]
           },
@@ -150,7 +157,39 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      service_status: {
+        Row: {
+          check_type: string | null
+          description: string | null
+          host: string | null
+          id: string | null
+          last_checked: string | null
+          name: string | null
+          port: string | null
+          status: string | null
+        }
+        Insert: {
+          check_type?: never
+          description?: never
+          host?: never
+          id?: string | null
+          last_checked?: string | null
+          name?: string | null
+          port?: never
+          status?: string | null
+        }
+        Update: {
+          check_type?: never
+          description?: never
+          host?: never
+          id?: string | null
+          last_checked?: string | null
+          name?: string | null
+          port?: never
+          status?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
