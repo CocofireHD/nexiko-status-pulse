@@ -15,38 +15,38 @@ export function useStatusData() {
       let services: Service[] = [];
 
       try {
-        // Fetch from secure Edge Function instead of insecure proxy
-        const { data: statusResult, error: functionError } = await supabase.functions.invoke('fetch-status');
+        // Use secure Edge Function instead of external proxy
+        const statusResponse = await supabase.functions.invoke('fetch-status');
         
-        if (functionError) {
-          throw new Error(`Edge function error: ${functionError.message}`);
-        } else if (statusResult?.success && statusResult?.services) {
-          services = statusResult.services.map((service: any) => ({
-            id: service.id,
-            name: service.name,
-            host: service.host || '',
-            check_type: service.check_type,
-            status: service.status as ServiceStatus,
-            created_at: service.created_at,
-            updated_at: service.updated_at,
-            last_checked: service.last_checked
-          }));
-        } else {
-          throw new Error('Invalid response from status function');
+        if (statusResponse.error) {
+          throw statusResponse.error;
         }
+        
+        const statusData = statusResponse.data;
+        
+        services = Object.entries(statusData).map(([name, status]) => ({
+          id: name.toLowerCase().replace(/\s+/g, '-'),
+          name,
+          host: '', // Not provided by API
+          check_type: 'http' as const,
+          status: status as ServiceStatus,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          last_checked: new Date().toISOString()
+        }));
       } catch (apiError) {
-        console.warn('External API failed, using fallback data:', apiError);
-        // Fallback data based on the expected API format
+        console.warn('Edge Function failed, using fallback data:', apiError);
+        // Fallback data
         const fallbackData = {
-          "Website1": "offline",
-          "MariaDB": "online", 
-          "Proxy": "online"
+          "Website1": "unknown",
+          "MariaDB": "unknown", 
+          "Proxy": "unknown"
         };
         
         services = Object.entries(fallbackData).map(([name, status]) => ({
           id: name.toLowerCase().replace(/\s+/g, '-'),
           name,
-          host: '', // Not provided by API
+          host: '', 
           check_type: 'http' as const,
           status: status as ServiceStatus,
           created_at: new Date().toISOString(),
