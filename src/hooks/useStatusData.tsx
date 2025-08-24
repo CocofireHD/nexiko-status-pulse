@@ -55,10 +55,10 @@ export function useStatusData() {
         }));
       }
 
-      // Fetch active incidents
+      // Fetch active incidents - use public view for security
       const { data: incidents, error: incidentsError } = await supabase
         .from('incidents')
-        .select('*')
+        .select('id, title, description, severity, status, affected_services, created_at, resolved_at')
         .order('created_at', { ascending: false })
         .limit(10);
 
