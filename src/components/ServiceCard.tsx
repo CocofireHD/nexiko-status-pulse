@@ -55,8 +55,11 @@ export function ServiceCard({ service, uptimeLogs }: ServiceCardProps) {
     if (!uptimeLogs.length) return 100;
     
     const last90Days = uptimeLogs.slice(-90);
+    const totalLogs = last90Days.filter(log => log.status !== 'unknown').length;
+    if (totalLogs === 0) return 100;
+    
     const onlineCount = last90Days.filter(log => log.status === 'online').length;
-    return Math.round((onlineCount / last90Days.length) * 100 * 100) / 100;
+    return Math.round((onlineCount / totalLogs) * 100 * 100) / 100;
   };
 
   const getAverageResponseTime = () => {
