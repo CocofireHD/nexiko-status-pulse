@@ -24,16 +24,24 @@ export function useStatusData() {
         
         const statusData = statusResponse.data;
         
-        services = Object.entries(statusData).map(([name, status]) => ({
-          id: name.toLowerCase().replace(/\s+/g, '-'),
-          name,
-          host: '', // Not provided by API
-          check_type: 'http' as const,
-          status: status as ServiceStatus,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          last_checked: new Date().toISOString()
-        }));
+        services = Object.entries(statusData).map(([name, serviceData]) => {
+          // Handle new API format: {"Website":{"status":"online","ping":14}}
+          const isNewFormat = typeof serviceData === 'object' && serviceData && 'status' in serviceData;
+          const status = isNewFormat ? (serviceData as any).status : serviceData;
+          const ping = isNewFormat ? (serviceData as any).ping : undefined;
+          
+          return {
+            id: name.toLowerCase().replace(/\s+/g, '-'),
+            name,
+            host: '', // Not provided by API
+            check_type: 'http' as const,
+            status: status as ServiceStatus,
+            ping,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            last_checked: new Date().toISOString()
+          };
+        });
       } catch (apiError) {
         console.warn('Edge Function failed, using fallback data:', apiError);
         // Fallback data
@@ -49,6 +57,7 @@ export function useStatusData() {
           host: '', 
           check_type: 'http' as const,
           status: status as ServiceStatus,
+          ping: undefined,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
           last_checked: new Date().toISOString()

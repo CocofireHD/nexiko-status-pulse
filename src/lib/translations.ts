@@ -14,6 +14,7 @@ export const translations = {
     'services.lastUpdated': 'Last updated',
     'services.uptime': 'Uptime',
     'services.responseTime': 'Response time',
+    'services.ping': 'Ping',
     
     // Status
     'status.online': 'Online',
@@ -62,6 +63,7 @@ export const translations = {
     'services.lastUpdated': 'Zuletzt aktualisiert',
     'services.uptime': 'Verfügbarkeit',
     'services.responseTime': 'Antwortzeit',
+    'services.ping': 'Ping',
     
     // Status
     'status.online': 'Online',

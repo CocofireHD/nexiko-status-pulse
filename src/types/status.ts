@@ -12,6 +12,7 @@ export interface Service {
   port?: number;
   check_type: 'http' | 'tcp' | 'ping';
   status: ServiceStatus;
+  ping?: number;
   last_checked?: string;
   created_at: string;
   updated_at: string;

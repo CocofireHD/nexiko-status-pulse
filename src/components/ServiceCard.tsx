@@ -111,13 +111,15 @@ export function ServiceCard({ service, uptimeLogs }: ServiceCardProps) {
             <span className="font-medium">{uptime}%</span>
           </div>
           
-          {avgResponseTime && (
-            <div className="flex items-center gap-2 text-sm">
-              <Clock className="w-4 h-4 text-primary" />
-              <span className="text-muted-foreground">{t('services.responseTime')}:</span>
-              <span className="font-medium">{avgResponseTime}{t('common.ms')}</span>
-            </div>
-          )}
+          <div className="flex items-center gap-2 text-sm">
+            <Clock className="w-4 h-4 text-primary" />
+            <span className="text-muted-foreground">{t('services.ping')}:</span>
+            <span className="font-medium">
+              {service.status === 'offline' ? '--' : 
+               service.ping ? `${service.ping}${t('common.ms')}` : '--'
+              }
+            </span>
+          </div>
         </div>
 
         <div className="space-y-2">
