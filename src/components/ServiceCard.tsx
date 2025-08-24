@@ -118,10 +118,6 @@ export function ServiceCard({ service, uptimeLogs }: ServiceCardProps) {
         </div>
 
         <div className="space-y-2">
-          <div className="flex justify-between text-xs text-muted-foreground">
-            <span>45 {t('common.days')}</span>
-            <span>99% {t('services.uptime')}</span>
-          </div>
           <UptimeBar uptimeLogs={uptimeLogs} />
         </div>
 
