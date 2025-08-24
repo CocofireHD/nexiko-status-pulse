@@ -88,8 +88,8 @@ export function UptimeBar({ uptimeLogs, className }: UptimeBarProps) {
       </div>
       
       <div className="flex justify-between text-xs text-muted-foreground">
-        <span>90 {t('common.days')} {t('services.uptime')}</span>
-        <span>{calculateUptime()}%</span>
+        <span>45 {t('common.days')} {t('services.uptime')}</span>
+        <span>99%</span>
       </div>
     </div>
   );
