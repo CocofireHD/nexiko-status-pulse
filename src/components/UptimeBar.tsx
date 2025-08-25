@@ -13,7 +13,7 @@ export function UptimeBar({ uptimeLogs, className }: UptimeBarProps) {
   // Get last 30 days of data
   const last30Days = uptimeLogs.slice(-30);
   
-  // Fill missing days with service status or default to current status
+  // Fill missing days with actual service status or unknown
   const fillGaps = () => {
     const filled = [];
     const now = new Date();
@@ -30,7 +30,7 @@ export function UptimeBar({ uptimeLogs, className }: UptimeBarProps) {
       
       filled.push({
         date: date.toISOString(),
-        status: logForDay?.status || 'online' // Default to online for demo
+        status: logForDay?.status || 'unknown' // Don't assume online for missing data
       });
     }
     
@@ -54,7 +54,7 @@ export function UptimeBar({ uptimeLogs, className }: UptimeBarProps) {
       case 'offline':
         return 'bg-gray-400';
       default:
-        return 'bg-green-500'; // Default to green for demo
+        return 'bg-gray-300'; // Unknown status shows as light gray
     }
   };
 
@@ -65,10 +65,14 @@ export function UptimeBar({ uptimeLogs, className }: UptimeBarProps) {
   };
 
   const calculateUptime = () => {
-    if (days.length === 0) return 100;
-    const onlineCount = days.filter(day => day.status === 'online').length;
-    const totalDays = days.filter(day => day.status !== 'unknown').length || days.length;
-    return Math.round((onlineCount / totalDays) * 100 * 100) / 100;
+    if (days.length === 0) return 0;
+    
+    // Only count days where we have actual data
+    const daysWithData = days.filter(day => day.status !== 'unknown');
+    if (daysWithData.length === 0) return 0;
+    
+    const onlineCount = daysWithData.filter(day => day.status === 'online').length;
+    return Math.round((onlineCount / daysWithData.length) * 100 * 100) / 100;
   };
 
   const uptime = calculateUptime();
