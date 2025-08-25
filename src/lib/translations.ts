@@ -34,6 +34,7 @@ export const translations = {
     'incidents.severity.minor': 'Minor',
     'incidents.severity.major': 'Major',
     'incidents.severity.critical': 'Critical',
+    'incidents.started': 'Started',
     
     // Common
     'common.loading': 'Loading...',
@@ -43,6 +44,24 @@ export const translations = {
     'common.ago': 'ago',
     'common.ms': 'ms',
     'common.justNow': 'Just now',
+    
+    // Groups
+    'groups.minecraftServers': 'Minecraft Servers',
+    'groups.websites': 'Websites',
+    'groups.otherServices': 'Other Services',
+    'groups.other': 'Other',
+    'groups.service': 'service',
+    'groups.services': 'services',
+    
+    // Uptime
+    'uptime.30DaysAgo': '30 days ago',
+    'uptime.today': 'Today',
+    'uptime.uptime': 'uptime',
+    
+    // 404 Page
+    'notFound.title': '404',
+    'notFound.message': 'Oops! Page not found',
+    'notFound.returnHome': 'Return to Home',
     
     // Footer
     'footer.poweredBy': 'Powered by Nexiko Network',
@@ -83,6 +102,7 @@ export const translations = {
     'incidents.severity.minor': 'Gering',
     'incidents.severity.major': 'Erheblich',
     'incidents.severity.critical': 'Kritisch',
+    'incidents.started': 'Begonnen',
     
     // Common
     'common.loading': 'Lädt...',
@@ -92,6 +112,24 @@ export const translations = {
     'common.ago': 'vor',
     'common.ms': 'ms',
     'common.justNow': 'Gerade eben',
+    
+    // Groups
+    'groups.minecraftServers': 'Minecraft Server',
+    'groups.websites': 'Webseiten',
+    'groups.otherServices': 'Andere Dienste',
+    'groups.other': 'Andere',
+    'groups.service': 'Dienst',
+    'groups.services': 'Dienste',
+    
+    // Uptime
+    'uptime.30DaysAgo': 'Vor 30 Tagen',
+    'uptime.today': 'Heute',
+    'uptime.uptime': 'Verfügbarkeit',
+    
+    // 404 Page
+    'notFound.title': '404',
+    'notFound.message': 'Ups! Seite nicht gefunden',
+    'notFound.returnHome': 'Zurück zur Startseite',
     
     // Footer
     'footer.poweredBy': 'Bereitgestellt von Nexiko Network',

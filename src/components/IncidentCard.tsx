@@ -114,11 +114,11 @@ export function IncidentCard({ incident }: IncidentCardProps) {
         
         <div className="flex justify-between text-xs text-muted-foreground pt-2 border-t">
           <span>
-            Started: {formatDate(incident.created_at)}
+            {t('incidents.started')}: {formatDate(incident.created_at)}
           </span>
           {incident.resolved_at && (
             <span>
-              Resolved: {formatDate(incident.resolved_at)}
+              {t('incidents.resolved')}: {formatDate(incident.resolved_at)}
             </span>
           )}
         </div>

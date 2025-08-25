@@ -94,9 +94,9 @@ export function UptimeBar({ uptimeLogs, className }: UptimeBarProps) {
       </div>
       
       <div className="flex justify-between items-center text-xs text-muted-foreground">
-        <span>30 days ago</span>
-        <span className="font-medium">{uptime}% uptime</span>
-        <span>Today</span>
+        <span>{t('uptime.30DaysAgo')}</span>
+        <span className="font-medium">{uptime}% {t('uptime.uptime')}</span>
+        <span>{t('uptime.today')}</span>
       </div>
     </div>
   );

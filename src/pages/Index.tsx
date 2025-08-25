@@ -28,6 +28,21 @@ const Index = () => {
     }));
   };
 
+  const getGroupTranslationKey = (groupName: string): string => {
+    switch (groupName) {
+      case 'Minecraft Servers':
+        return 'groups.minecraftServers';
+      case 'Websites':
+        return 'groups.websites';
+      case 'Other Services':
+        return 'groups.otherServices';
+      case 'Other':
+        return 'groups.other';
+      default:
+        return groupName;
+    }
+  };
+
   // Calculate overall status
   const getOverallStatus = (): ServiceStatus => {
     if (!data?.services.length) return 'unknown';
@@ -124,9 +139,9 @@ const Index = () => {
                     ) : (
                       <ChevronRight className="h-5 w-5" />
                     )}
-                    <h3 className="text-xl font-semibold">{groupName}</h3>
+                    <h3 className="text-xl font-semibold">{t(getGroupTranslationKey(groupName))}</h3>
                     <span className="text-sm text-muted-foreground ml-auto">
-                      {services.length} service{services.length !== 1 ? 's' : ''}
+                      {services.length} {services.length === 1 ? t('groups.service') : t('groups.services')}
                     </span>
                   </CollapsibleTrigger>
                   <CollapsibleContent className="mt-4">
@@ -156,9 +171,9 @@ const Index = () => {
                   ) : (
                     <ChevronRight className="h-5 w-5" />
                   )}
-                  <h3 className="text-xl font-semibold">Other</h3>
+                  <h3 className="text-xl font-semibold">{t('groups.other')}</h3>
                   <span className="text-sm text-muted-foreground ml-auto">
-                    {ungroupedServices.length} service{ungroupedServices.length !== 1 ? 's' : ''}
+                    {ungroupedServices.length} {ungroupedServices.length === 1 ? t('groups.service') : t('groups.services')}
                   </span>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="mt-4">
