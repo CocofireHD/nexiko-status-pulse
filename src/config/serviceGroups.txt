@@ -1,0 +1,6 @@
+# Service Groups Configuration
+# Format: GroupName -> ServiceName1, ServiceName2, ServiceName3
+
+Minecraft Servers -> Proxy, Lobby, Factions, SMP, Test/Builder
+Websites -> Website, Unban-Website
+Other Services -> MariaDB

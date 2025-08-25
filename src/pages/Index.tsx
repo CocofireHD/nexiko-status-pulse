@@ -5,12 +5,28 @@ import { ServiceCard } from '@/components/ServiceCard';
 import { IncidentCard } from '@/components/IncidentCard';
 import { StatusFooter } from '@/components/StatusFooter';
 import { Button } from '@/components/ui/button';
-import { Loader2, RefreshCcw, AlertCircle } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Loader2, RefreshCcw, AlertCircle, ChevronDown, ChevronRight } from 'lucide-react';
 import { ServiceStatus } from '@/types/status';
+import { groupServices } from '@/lib/serviceGroups';
+import { useState } from 'react';
 
 const Index = () => {
   const { data, loading, error, refetch } = useStatusData();
   const { t } = useLanguage();
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
+    'Minecraft Servers': true,
+    'Websites': true,
+    'Other Services': true,
+    'Other': true
+  });
+
+  const toggleGroup = (groupName: string) => {
+    setOpenGroups(prev => ({
+      ...prev,
+      [groupName]: !prev[groupName]
+    }));
+  };
 
   // Calculate overall status
   const getOverallStatus = (): ServiceStatus => {
@@ -81,6 +97,9 @@ const Index = () => {
   const overallStatus = getOverallStatus();
   const activeIncidents = data?.incidents.filter(i => i.status === 'active') || [];
   const recentIncidents = data?.incidents.slice(0, 5) || [];
+  
+  // Group services by categories
+  const { groupedServices, ungroupedServices } = groupServices(data?.services || []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -90,14 +109,71 @@ const Index = () => {
         {/* Services Section */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-6">{t('services.title')}</h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {data?.services.map((service) => (
-              <ServiceCard 
-                key={service.id} 
-                service={service}
-                uptimeLogs={getUptimeLogsForService(service.id)}
-              />
+          <div className="space-y-6">
+            {/* Render grouped services */}
+            {Object.entries(groupedServices).map(([groupName, services]) => (
+              services.length > 0 && (
+                <Collapsible 
+                  key={groupName}
+                  open={openGroups[groupName]}
+                  onOpenChange={() => toggleGroup(groupName)}
+                >
+                  <CollapsibleTrigger className="flex items-center gap-2 w-full p-4 bg-muted/50 rounded-lg hover:bg-muted/70 transition-colors">
+                    {openGroups[groupName] ? (
+                      <ChevronDown className="h-5 w-5" />
+                    ) : (
+                      <ChevronRight className="h-5 w-5" />
+                    )}
+                    <h3 className="text-xl font-semibold">{groupName}</h3>
+                    <span className="text-sm text-muted-foreground ml-auto">
+                      {services.length} service{services.length !== 1 ? 's' : ''}
+                    </span>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="mt-4">
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                      {services.map((service) => (
+                        <ServiceCard 
+                          key={service.id} 
+                          service={service}
+                          uptimeLogs={getUptimeLogsForService(service.id)}
+                        />
+                      ))}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              )
             ))}
+            
+            {/* Render ungrouped services if any */}
+            {ungroupedServices.length > 0 && (
+              <Collapsible 
+                open={openGroups['Other']}
+                onOpenChange={() => toggleGroup('Other')}
+              >
+                <CollapsibleTrigger className="flex items-center gap-2 w-full p-4 bg-muted/50 rounded-lg hover:bg-muted/70 transition-colors">
+                  {openGroups['Other'] ? (
+                    <ChevronDown className="h-5 w-5" />
+                  ) : (
+                    <ChevronRight className="h-5 w-5" />
+                  )}
+                  <h3 className="text-xl font-semibold">Other</h3>
+                  <span className="text-sm text-muted-foreground ml-auto">
+                    {ungroupedServices.length} service{ungroupedServices.length !== 1 ? 's' : ''}
+                  </span>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mt-4">
+                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    {ungroupedServices.map((service) => (
+                      <ServiceCard 
+                        key={service.id} 
+                        service={service}
+                        uptimeLogs={getUptimeLogsForService(service.id)}
+                      />
+                    ))}
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            )}
           </div>
         </section>
 
