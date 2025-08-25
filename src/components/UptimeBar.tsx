@@ -71,16 +71,18 @@ export function UptimeBar({ uptimeLogs, className }: UptimeBarProps) {
     return Math.round((onlineCount / totalDays) * 100 * 100) / 100;
   };
 
+  const uptime = calculateUptime();
+
   return (
     <div className={cn("space-y-3", className)}>
-      <div className="flex gap-1 h-16 items-end bg-gray-900 p-3 rounded">
+      <div className="flex gap-1 h-12 items-end bg-gray-900 p-2 rounded">
         {days.map((day, index) => (
           <div
             key={index}
             className={cn(
               "flex-1 transition-all hover:opacity-80 cursor-pointer rounded-sm",
               getStatusColor(day.status),
-              "h-12"
+              "h-6"
             )}
             title={getStatusTooltip(day.status, day.date)}
           />
@@ -89,7 +91,7 @@ export function UptimeBar({ uptimeLogs, className }: UptimeBarProps) {
       
       <div className="flex justify-between items-center text-xs text-muted-foreground">
         <span>30 days ago</span>
-        <span className="font-medium">100% uptime</span>
+        <span className="font-medium">{uptime}% uptime</span>
         <span>Today</span>
       </div>
     </div>
